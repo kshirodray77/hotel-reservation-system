@@ -1,0 +1,55 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+.mvn/wrapper/maven-wrapper.jar
+hs_err_pid*
+
+# Eclipse / VS Code
+.classpath
+.project
+.settings/
+.vscode/
+
+# Spring Boot
+HELP.md
+
+# Node / Vite / React
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm
+.eslintcache
+
+# Build artifacts
+build/
+out/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+
+# DB volumes
+postgres-data/
+kafka-data/
+zookeeper-data/
