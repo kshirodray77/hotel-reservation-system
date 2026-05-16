@@ -1,0 +1,71 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: hotel-reservation
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/hoteldb}
+    username: ${SPRING_DATASOURCE_USERNAME:hotel}
+    password: ${SPRING_DATASOURCE_PASSWORD:hotelpass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: hotel-reservation
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.hotel.reservation.kafka"
+
+  mail:
+    host: ${MAIL_HOST:smtp.example.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:noreply@hotel.com}
+    password: ${MAIL_PASSWORD:secret}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-this-is-just-a-demo-key-1234567890}
+    expiration-ms: 86400000   # 24h
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:3000"
+  kafka:
+    topics:
+      booking-events: booking-events
+      payment-events: payment-events
+      notification-events: notification-events
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    com.hotel.reservation: INFO
+    org.springframework.kafka: WARN
+    org.hibernate.SQL: WARN
